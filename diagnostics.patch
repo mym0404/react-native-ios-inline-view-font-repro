@@ -1,0 +1,34 @@
+diff --git i/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm w/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
+index 33306db..f522828 100644
+--- i/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
++++ w/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
+@@ -652,6 +652,29 @@ - (TextMeasurement)_measureTextStorage:(NSTextStorage *)textStorage
+                            glyphRect.origin.y + glyphRect.size.height - attachmentSize.height + font.descender},
+                       .size = attachmentSize};
+ 
++                  UIFont *precedingFont =
++                      [textStorage attribute:NSFontAttributeName
++                                     atIndex:range.location > 0 ? range.location - 1 : range.location
++                              effectiveRange:nil];
++                  CGRect lineRect = [layoutManager lineFragmentRectForGlyphAtIndex:attachmentGlyphRange.location
++                                                                    effectiveRange:nil];
++                  CGFloat baseline =
++                      lineRect.origin.y + [layoutManager locationForGlyphAtIndex:attachmentGlyphRange.location].y;
++                  NSLog(
++                      @"INLINE_ATTACHMENT_METRICS text=%@ font=%@ size=%.6f descender=%.6f inheritedFont=%@ inheritedSize=%.6f inheritedDescender=%.6f glyphBottom=%.6f baseline=%.6f viewY=%.6f viewBottom=%.6f height=%.6f",
++                      textStorage.string,
++                      font.fontName,
++                      font.pointSize,
++                      font.descender,
++                      precedingFont.fontName,
++                      precedingFont.pointSize,
++                      precedingFont.descender,
++                      CGRectGetMaxY(glyphRect),
++                      baseline,
++                      frame.origin.y,
++                      CGRectGetMaxY(frame),
++                      attachmentSize.height);
++
+                   auto rect = facebook::react::Rect{
+                       .origin = facebook::react::Point{.x = frame.origin.x, .y = frame.origin.y},
+                       .size = facebook::react::Size{.width = frame.size.width, .height = frame.size.height}};
