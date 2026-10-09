@@ -2,6 +2,8 @@
 
 Reproduces inherited-font loss for `<View>` inside `<Text>` in React Native Fabric on iOS. The blue box bottom should meet the red text baseline. Each row reports the baseline from `onTextLayout`, the View bottom from `ref.measure()`, and their difference in points. Allow one physical pixel for layout rounding.
 
+Upstream draft PR: [react/react-native#58967](https://github.com/react/react-native/pull/58967).
+
 **Verified on iPhone 17 Pro / iOS 26.5 with `agent-device`.** The unpatched attachment uses Helvetica 12 with descender `-2.759766 pt`. The patch resolves the inherited font and reduces the measured errors in ordinary, tall, wrapped, and scaled cases to less than one physical pixel. Explicit `lineHeight` retains a separate baseline-offset error; nested Text cannot be measured with this View's public `measure()` call. See [results and limitations](evidence/RESULTS.md).
 
 | Before | After |
