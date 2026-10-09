@@ -1,10 +1,10 @@
 # iOS inline View font reproduction
 
-Reproduces inherited-font loss for `<View>` inside `<Text>` in React Native Fabric on iOS, with the same cases available on Android. The blue box bottom should meet the red text baseline. Each row reports the baseline from `onTextLayout`, the View bottom from `ref.measure()`, and their difference in iOS points or Android dp. Allow one physical pixel for layout rounding.
+Reproduces inherited-font loss and missed lineHeight baseline offsets for `<View>` inside `<Text>` in React Native Fabric on iOS, with the same cases available on Android. The blue box bottom should meet the red text baseline. Each row reports the baseline from `onTextLayout`, the View bottom from `ref.measure()`, and their difference in iOS points or Android dp. Allow one physical pixel for layout rounding.
 
-Upstream draft PR: [react/react-native#58967](https://github.com/react/react-native/pull/58967).
+Upstream PR: [react/react-native#58967](https://github.com/react/react-native/pull/58967).
 
-**Verified on iPhone 17 Pro / iOS 26.5 with `agent-device`.** The unpatched attachment uses Helvetica 12 with descender `-2.759766 pt`. The patch resolves the inherited font and reduces the measured errors in ordinary, tall, wrapped, and scaled cases to less than one physical pixel. Explicit `lineHeight` retains a separate baseline-offset error; nested Text cannot be measured with this View's public `measure()` call. See [results and limitations](evidence/RESULTS.md).
+**Verified on iPhone 17 Pro / iOS 26.5 with `agent-device`.** The patch preserves the inherited attachment font and accounts for the applied baseline offset. All nine measurable samples are within one physical pixel, including `lineHeight: 48`, at default and enlarged text sizes. The lineHeight sample's error changes from `10.293 pt` on main to `-0.041 pt`; its native View bottom exactly meets the native baseline. Nested Text cannot be measured with this View's public `measure()` call. See [results and limitations](evidence/RESULTS.md).
 
 **Android comparison verified on API 37 with `agent-device`.** All nine measurable samples, including `lineHeight: 48`, have absolute errors below `0.0001 dp` at font scales 1.0 and 1.75. Android uses its native sans-serif, serif, and monospace families. See [Android measurements, screenshots, and logs](evidence/ANDROID.md).
 
@@ -115,7 +115,7 @@ agent-device scroll bottom --session android-inline-font --settle
 
 ## Native diagnostics
 
-`diagnostics.patch` adds temporary logging at the actual attachment measurement. It is separate from the proposed fix and is not part of the upstream PR. Apply it before either build to inspect the attachment font, surrounding font, descender, glyph bounds, baseline, and View frame:
+`diagnostics.patch` logs the attachment font, surrounding font, descender, glyph bounds, baseline offset, baseline, and View frame. It is separate from the proposed fix and is not part of the upstream PR. Apply it to either the unpatched or fixed source before building. If it is already applied, remove it before applying `fix.patch`, then reapply it:
 
 ```sh
 git apply ../diagnostics.patch
@@ -138,6 +138,8 @@ agent-device close --session inline-font-repro
 
 `BaseTextShadowNode::buildAttributedString` already puts the surrounding Text attributes on the attachment fragment. `RCTNSAttributedStringFragmentFromFragment` drops the font when it creates an `NSTextAttachment` string. The frame calculation later reads `NSFontAttributeName` from that attachment character and adds its descender to the y coordinate.
 
-The fix sets only the attachment's effective font with the same resolver used for ordinary text. It preserves the attachment and the existing placement formula. Apple's [NSAttributedString documentation](https://developer.apple.com/documentation/foundation/nsattributedstring) describes the default font used when font information is absent. See `evidence/` for the actual simulator observations.
+An explicit lineHeight also applies `NSBaselineOffsetAttributeName` to center the font in the requested line. The existing attachment calculation misses this offset; for Helvetica 32 and lineHeight 48, it leaves another `(48 - 36.8) / 2 = 5.6 pt` of error.
+
+The fix sets the attachment's effective font with the resolver used for ordinary text, then subtracts its baseline offset when calculating the View's y coordinate. When no baseline offset is present, its value is zero. Apple's [NSAttributedString documentation](https://developer.apple.com/documentation/foundation/nsattributedstring) describes the default font used when font information is absent. See `evidence/` for the actual simulator observations.
 
 If Watchman cannot access the checkout, use a temporary Metro config that merges RNTester's existing config with `resolver.useWatchman: false`, then pass its absolute path through `--config` when starting Metro or bundling. This only changes file watching. Stop Metro and remove the temporary config after testing.

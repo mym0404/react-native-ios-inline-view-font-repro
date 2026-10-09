@@ -53,7 +53,7 @@ View top = layout.getLineBaseline(line) - View height
 
 This makes its bottom meet the line's actual baseline, including a baseline changed by lineHeight. The remaining differences in the public measurements are consistent with floating-point conversion precision.
 
-On iOS, the existing placement formula uses glyph bounds and a font descender. For Helvetica 32 with lineHeight 48, text receives a `(48 - 36.8) / 2 = 5.6 pt` baseline offset, but the attachment placement does not account for that offset. Separately, physical-pixel rounding explains the subpixel errors after the font fix in samples without explicit lineHeight. See the [iOS measurements and source explanation](RESULTS.md#limits-observed-during-verification).
+Unpatched iOS main uses glyph bounds and a font descender without accounting for the baseline offset applied by lineHeight. For Helvetica 32 and lineHeight 48, that offset is `(48 - 36.8) / 2 = 5.6 pt`. The combined iOS fix preserves the attachment font and subtracts this offset, so its native View bottom also meets the baseline. Public iOS measurements retain physical-pixel rounding differences. See the [final iOS measurements and source explanation](RESULTS.md).
 
 ## Screenshots and raw evidence
 

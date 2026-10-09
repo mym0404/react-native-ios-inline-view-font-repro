@@ -1,21 +1,22 @@
-diff --git i/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm w/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
-index 33306db..f522828 100644
---- i/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
-+++ w/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
-@@ -652,6 +652,29 @@ - (TextMeasurement)_measureTextStorage:(NSTextStorage *)textStorage
-                            glyphRect.origin.y + glyphRect.size.height - attachmentSize.height + font.descender},
+diff --git a/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm b/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
+--- a/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
++++ b/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
+@@ -655,4 +655,31 @@
                        .size = attachmentSize};
- 
+
 +                  UIFont *precedingFont =
 +                      [textStorage attribute:NSFontAttributeName
 +                                     atIndex:range.location > 0 ? range.location - 1 : range.location
 +                              effectiveRange:nil];
++                  CGFloat diagnosticBaselineOffset =
++                      [[textStorage attribute:NSBaselineOffsetAttributeName atIndex:range.location effectiveRange:nil]
++                          doubleValue];
 +                  CGRect lineRect = [layoutManager lineFragmentRectForGlyphAtIndex:attachmentGlyphRange.location
 +                                                                    effectiveRange:nil];
 +                  CGFloat baseline =
 +                      lineRect.origin.y + [layoutManager locationForGlyphAtIndex:attachmentGlyphRange.location].y;
 +                  NSLog(
-+                      @"INLINE_ATTACHMENT_METRICS text=%@ font=%@ size=%.6f descender=%.6f inheritedFont=%@ inheritedSize=%.6f inheritedDescender=%.6f glyphBottom=%.6f baseline=%.6f viewY=%.6f viewBottom=%.6f height=%.6f",
++                      @"INLINE_ATTACHMENT_METRICS text=%@ font=%@ size=%.6f descender=%.6f inheritedFont=%@ inheritedSize=%.6f inheritedDescender=%.6f glyphBottom=%.6f baselineOffset=%.6f baseline=%.6f viewY=%.6f viewBottom=%.6f height=%.6f",
 +                      textStorage.string,
 +                      font.fontName,
 +                      font.pointSize,
@@ -24,6 +25,7 @@ index 33306db..f522828 100644
 +                      precedingFont.pointSize,
 +                      precedingFont.descender,
 +                      CGRectGetMaxY(glyphRect),
++                      diagnosticBaselineOffset,
 +                      baseline,
 +                      frame.origin.y,
 +                      CGRectGetMaxY(frame),
@@ -31,4 +33,3 @@ index 33306db..f522828 100644
 +
                    auto rect = facebook::react::Rect{
                        .origin = facebook::react::Point{.x = frame.origin.x, .y = frame.origin.y},
-                       .size = facebook::react::Size{.width = frame.size.width, .height = frame.size.height}};

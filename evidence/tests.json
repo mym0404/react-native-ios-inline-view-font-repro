@@ -23,14 +23,14 @@
   "environmentDescription" : "RNTesterUnitTests · Built with macOS 27.0.1",
   "expectedFailures" : 0,
   "failedTests" : 0,
-  "finishTime" : 1791547958.415,
+  "finishTime" : 1791567544.359,
   "passedTests" : 35,
   "result" : "Passed",
   "runtimeWarnings" : [
 
   ],
   "skippedTests" : 0,
-  "startTime" : 1791547957.547,
+  "startTime" : 1791567536.883,
   "statistics" : [
 
   ],

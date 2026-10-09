@@ -1,9 +1,11 @@
+diff --git a/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTAttributedTextUtils.mm b/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTAttributedTextUtils.mm
+index 95ff5a0..24c9453 100644
 --- a/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTAttributedTextUtils.mm
 +++ b/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTAttributedTextUtils.mm
-@@ -415,7 +415,13 @@
+@@ -415,7 +415,13 @@ void RCTApplyBaselineOffset(NSMutableAttributedString *attributedText)
      attachment.image = placeholderImage;
      attachment.bounds = bounds;
- 
+
 -    return [[NSMutableAttributedString attributedStringWithAttachment:attachment] mutableCopy];
 +    NSMutableAttributedString *attributedString =
 +        [[NSMutableAttributedString attributedStringWithAttachment:attachment] mutableCopy];
@@ -15,3 +17,27 @@
    } else {
      NSString *decoded = [[NSString alloc] initWithBytes:fragment.string.data()
                                                   length:fragment.string.size()
+diff --git a/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm b/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
+index 33306db..62b5f4b 100644
+--- a/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
++++ b/packages/react-native/ReactCommon/react/renderer/textlayoutmanager/platform/ios/react/renderer/textlayoutmanager/RCTTextLayoutManager.mm
+@@ -643,13 +643,15 @@ - (TextMeasurement)_measureTextStorage:(NSTextStorage *)textStorage
+                   CGRect glyphRect = [layoutManager boundingRectForGlyphRange:range inTextContainer:textContainer];
+
+                   CGRect frame;
+-                  UIFont *font = [[textStorage attributedSubstringFromRange:range] attribute:NSFontAttributeName
+-                                                                                     atIndex:0
+-                                                                              effectiveRange:nil];
++                  NSDictionary<NSAttributedStringKey, id> *attributes = [textStorage attributesAtIndex:range.location
++                                                                                        effectiveRange:nil];
++                  UIFont *font = attributes[NSFontAttributeName];
++                  CGFloat baselineOffset = [attributes[NSBaselineOffsetAttributeName] doubleValue];
+                   frame = {
+                       .origin =
+                           {glyphRect.origin.x,
+-                           glyphRect.origin.y + glyphRect.size.height - attachmentSize.height + font.descender},
++                           glyphRect.origin.y + glyphRect.size.height - attachmentSize.height + font.descender -
++                               baselineOffset},
+                       .size = attachmentSize};
+
+                   auto rect = facebook::react::Rect{
