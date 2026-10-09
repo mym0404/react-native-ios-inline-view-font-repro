@@ -36,12 +36,15 @@ Positive errors place the box bottom below the red text baseline. Native scaled-
 
 ## Limits observed during verification
 
-- **Explicit lineHeight:** the font inheritance bug is fixed, but the existing glyph-bound placement formula still leaves 5.6 pt of native error (5.626 pt after pixel rounding) in the lineHeight 48 sample. This is not claimed as fixed. The remaining native error is consistent with a separate paragraph baseline-offset adjustment. The patch does not change placement arithmetic.
+- **Explicit lineHeight:** the font inheritance bug is fixed, but the existing glyph-bound placement formula still leaves 5.6 pt of native error (5.626 pt after pixel rounding) in the lineHeight 48 sample. `RCTApplyBaselineOffsetForRange` applies `(48 - 36.8) / 2 = 5.6` pt to center the font in the requested line height. The attachment frame calculation uses the glyph bounds and font descender without accounting for `NSBaselineOffsetAttributeName`: its bottom is `48 - 7.359375 = 40.640625`, while TextKit reports the text baseline at `35.040625`. The difference is exactly 5.6 pt. The patch does not change this placement arithmetic.
 - **Nested Text:** the inline View is visible, but the public `ref.measure()` returns a zero-size frame through the nested Text node. The UI reports `View measurement unavailable`; it does not display that frame as a valid alignment error. Inspect this row visually. The identical inner-font attachment is resolved through the same native fragment path.
 - **Warnings:** source builds emitted existing deprecation, documentation, and third-party warnings. The modified attributed-string conversion compiled without errors.
 
+The UI's `error` is the View bottom minus the text baseline, not a runtime error. Small residual values come from different rounding paths: `onTextLayout` reports fractional text coordinates, while `ParagraphShadowNode::layout` rounds attachment origins to the physical pixel grid. For Helvetica 32, the native attachment y is `11.107292`, but its public frame y is `11.000000`; the displayed error is therefore about `-0.107292` pt. At three pixels per point, one pixel is `0.333333` pt. This rounding difference is separate from the 5.6 pt lineHeight error.
+
 ## Evidence
 
+- [Android comparison](ANDROID.md), including the same lineHeight, wrapping, tall View, and font-scaling cases.
 - [Before](before.png) and [after](after.png), same top-of-screen samples.
 - [Before lower samples](before-bottom.png) and [after lower samples](after-bottom.png).
 - [Before font scaling](before-scaled.png) and [after font scaling](after-scaled.png).

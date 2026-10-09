@@ -6,58 +6,69 @@
 import type {TextStyle} from 'react-native';
 
 import * as React from 'react';
-import {ScrollView, StyleSheet, Text, View} from 'react-native';
+import {
+  PixelRatio,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 const INLINE_SIZE = 18;
-const HELVETICA = 'Helvetica';
-const TIMES_NEW_ROMAN = 'TimesNewRomanPSMT';
+const IS_ANDROID = Platform.OS === 'android';
+const SANS_FONT = IS_ANDROID ? 'sans-serif' : 'Helvetica';
+const SERIF_FONT = IS_ANDROID ? 'serif' : 'TimesNewRomanPSMT';
+const SERIF_LABEL = IS_ANDROID ? SERIF_FONT : 'Times New Roman';
+const MONOSPACE_FONT = IS_ANDROID ? 'monospace' : 'Courier';
+const LAYOUT_UNIT = IS_ANDROID ? 'dp' : 'pt';
 const LARGE_FONT_SIZE = 32;
 const MEDIUM_FONT_SIZE = 24;
 const DEFAULT_FONT_SIZE = 20;
 const SAMPLES = [
   {
-    name: 'Helvetica 12 (control)',
-    style: {fontFamily: HELVETICA, fontSize: 12},
+    name: `${SANS_FONT} 12 (control)`,
+    style: {fontFamily: SANS_FONT, fontSize: 12},
   },
   {name: 'System 20', style: {fontSize: DEFAULT_FONT_SIZE}},
   {
-    name: 'Helvetica 32',
-    style: {fontFamily: HELVETICA, fontSize: LARGE_FONT_SIZE},
+    name: `${SANS_FONT} 32`,
+    style: {fontFamily: SANS_FONT, fontSize: LARGE_FONT_SIZE},
   },
   {
-    name: 'Times New Roman 32',
-    style: {fontFamily: TIMES_NEW_ROMAN, fontSize: LARGE_FONT_SIZE},
+    name: `${SERIF_LABEL} 32`,
+    style: {fontFamily: SERIF_FONT, fontSize: LARGE_FONT_SIZE},
   },
   {
-    name: 'Courier bold 24',
+    name: `${MONOSPACE_FONT} bold 24`,
     style: {
-      fontFamily: 'Courier',
+      fontFamily: MONOSPACE_FONT,
       fontSize: MEDIUM_FONT_SIZE,
       fontWeight: 'bold',
     },
   },
   {
-    name: 'Helvetica 32 / lineHeight 48',
-    style: {fontFamily: HELVETICA, fontSize: LARGE_FONT_SIZE, lineHeight: 48},
+    name: `${SANS_FONT} 32 / lineHeight 48`,
+    style: {fontFamily: SANS_FONT, fontSize: LARGE_FONT_SIZE, lineHeight: 48},
   },
   {
-    name: 'Nested Times New Roman 32',
-    style: {fontFamily: TIMES_NEW_ROMAN, fontSize: LARGE_FONT_SIZE},
+    name: `Nested ${SERIF_LABEL} 32`,
+    style: {fontFamily: SERIF_FONT, fontSize: LARGE_FONT_SIZE},
     isNested: true,
   },
   {
-    name: 'Tall View / Helvetica 20',
-    style: {fontFamily: HELVETICA, fontSize: DEFAULT_FONT_SIZE},
+    name: `Tall View / ${SANS_FONT} 20`,
+    style: {fontFamily: SANS_FONT, fontSize: DEFAULT_FONT_SIZE},
     height: 48,
   },
   {
-    name: 'Wrapped / Helvetica 24',
-    style: {fontFamily: HELVETICA, fontSize: MEDIUM_FONT_SIZE},
+    name: `Wrapped / ${SANS_FONT} 24`,
+    style: {fontFamily: SANS_FONT, fontSize: MEDIUM_FONT_SIZE},
     isWrapped: true,
   },
   {
-    name: 'Scaled / Helvetica 20',
-    style: {fontFamily: HELVETICA, fontSize: DEFAULT_FONT_SIZE},
+    name: `Scaled / ${SANS_FONT} 20`,
+    style: {fontFamily: SANS_FONT, fontSize: DEFAULT_FONT_SIZE},
     isScaled: true,
   },
 ];
@@ -129,13 +140,25 @@ function Sample({
           ? baseline == null
             ? 'Measuring...'
             : 'View measurement unavailable'
-          : `baseline ${baseline?.toFixed(3)} | bottom ${bottom?.toFixed(3)} | error ${error.toFixed(3)} pt`}
+          : `baseline ${baseline?.toFixed(3)} | bottom ${bottom?.toFixed(3)} | error ${error.toFixed(3)} ${LAYOUT_UNIT}`}
       </Text>
     </View>
   );
 }
 
 export function App(): React.Node {
+  React.useEffect(() => {
+    console.log(
+      'INLINE_VIEW_ENVIRONMENT',
+      JSON.stringify({
+        platform: Platform.OS,
+        version: Platform.Version,
+        pixelRatio: PixelRatio.get(),
+        fontScale: PixelRatio.getFontScale(),
+      }),
+    );
+  }, []);
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text allowFontScaling={false} style={styles.heading}>
@@ -171,7 +194,7 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: '#dc2626',
   },
-  nestedParent: {fontFamily: HELVETICA, fontSize: 16},
+  nestedParent: {fontFamily: SANS_FONT, fontSize: 16},
   metrics: {
     fontSize: 10,
     color: '#334155',
