@@ -4,6 +4,14 @@ Reproduces inherited-font loss and missed lineHeight baseline offsets for `<View
 
 Upstream PR: [react/react-native#58967](https://github.com/react/react-native/pull/58967).
 
+## RNTester example
+
+The PR includes the reproduction in iOS RNTester under **Text > Inline view baseline alignment**. Search for that title in Text, or open `rntester://example/TextExample/inline-view-baseline`. The example shows ten cases, a red baseline, each View's alignment difference, and the current font scale. Scroll to reach the final sample.
+
+[RNTester source-build results](evidence/RNTESTER.md) include fresh before/after screenshots and measurements on iPhone 18 Pro / iOS 27.0 at font scales 1.0 and 2.143.
+
+## Standalone reproduction
+
 **Verified on iPhone 17 Pro / iOS 26.5 with `agent-device`.** The patch preserves the inherited attachment font and accounts for the applied baseline offset. All nine measurable samples are within one physical pixel, including `lineHeight: 48`, at default and enlarged text sizes. The lineHeight sample's error changes from `10.293 pt` on main to `-0.041 pt`; its native View bottom exactly meets the native baseline. Nested Text cannot be measured with this View's public `measure()` call. See [results and limitations](evidence/RESULTS.md).
 
 **Android comparison verified on API 37 with `agent-device`.** All nine measurable samples, including `lineHeight: 48`, have absolute errors below `0.0001 dp` at font scales 1.0 and 1.75. Android uses its native sans-serif, serif, and monospace families. See [Android measurements, screenshots, and logs](evidence/ANDROID.md).

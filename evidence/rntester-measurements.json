@@ -1,0 +1,326 @@
+{
+  "exampleRevision": "95d557afb09b76659ff89a3b49b4aba511cc13e2",
+  "device": {
+    "model": "iPhone 18 Pro",
+    "os": "iOS 27.0",
+    "xcode": "27.2 (27B52)",
+    "sdk": "iOS Simulator 27.2",
+    "renderer": "Fabric",
+    "agentDevice": "0.21.36"
+  },
+  "displayPrecisionPt": 0.001,
+  "groups": {
+    "before": {
+      "nativeRevision": "c7429b0e97b400a88158f73d2250f8d5f16593cf",
+      "textSizeCategory": "large",
+      "displayedFontScale": 1.0,
+      "displayedPixelTolerancePt": 0.333,
+      "measurableCases": 9,
+      "maxAbsoluteErrorPt": 10.293,
+      "cases": [
+        {
+          "name": "Helvetica 12 (control)",
+          "measurable": true,
+          "baseline": 18.333,
+          "viewBottom": 18.333,
+          "error": 0.0
+        },
+        {
+          "name": "System 20",
+          "measurable": true,
+          "baseline": 19.043,
+          "viewBottom": 21.0,
+          "error": 1.957
+        },
+        {
+          "name": "Helvetica 32",
+          "measurable": true,
+          "baseline": 29.441,
+          "viewBottom": 34.0,
+          "error": 4.559
+        },
+        {
+          "name": "Times New Roman 32",
+          "measurable": true,
+          "baseline": 28.516,
+          "viewBottom": 32.667,
+          "error": 4.151
+        },
+        {
+          "name": "Courier bold 24",
+          "measurable": true,
+          "baseline": 18.333,
+          "viewBottom": 21.333,
+          "error": 3.0
+        },
+        {
+          "name": "Helvetica 32 / lineHeight 48",
+          "measurable": true,
+          "baseline": 35.041,
+          "viewBottom": 45.333,
+          "error": 10.293
+        },
+        {
+          "name": "Nested Times New Roman 32",
+          "measurable": false,
+          "reason": "View measurement unavailable"
+        },
+        {
+          "name": "Tall View / Helvetica 20",
+          "measurable": true,
+          "baseline": 48.333,
+          "viewBottom": 50.333,
+          "error": 2.0
+        },
+        {
+          "name": "Wrapped / Helvetica 24",
+          "measurable": true,
+          "baseline": 49.68,
+          "viewBottom": 52.333,
+          "error": 2.653
+        },
+        {
+          "name": "Scaled / Helvetica 20",
+          "measurable": true,
+          "baseline": 18.4,
+          "viewBottom": 20.333,
+          "error": 1.933
+        }
+      ]
+    },
+    "beforeScaled": {
+      "nativeRevision": "c7429b0e97b400a88158f73d2250f8d5f16593cf",
+      "textSizeCategory": "accessibility-large",
+      "displayedFontScale": 2.143,
+      "displayedPixelTolerancePt": 0.333,
+      "measurableCases": 9,
+      "maxAbsoluteErrorPt": 10.293,
+      "cases": [
+        {
+          "name": "Helvetica 12 (control)",
+          "measurable": true,
+          "baseline": 18.333,
+          "viewBottom": 18.333,
+          "error": 0.0
+        },
+        {
+          "name": "System 20",
+          "measurable": true,
+          "baseline": 19.043,
+          "viewBottom": 21.0,
+          "error": 1.957
+        },
+        {
+          "name": "Helvetica 32",
+          "measurable": true,
+          "baseline": 29.441,
+          "viewBottom": 34.0,
+          "error": 4.559
+        },
+        {
+          "name": "Times New Roman 32",
+          "measurable": true,
+          "baseline": 28.516,
+          "viewBottom": 32.667,
+          "error": 4.151
+        },
+        {
+          "name": "Courier bold 24",
+          "measurable": true,
+          "baseline": 18.333,
+          "viewBottom": 21.333,
+          "error": 3.0
+        },
+        {
+          "name": "Helvetica 32 / lineHeight 48",
+          "measurable": true,
+          "baseline": 35.041,
+          "viewBottom": 45.333,
+          "error": 10.293
+        },
+        {
+          "name": "Nested Times New Roman 32",
+          "measurable": false,
+          "reason": "View measurement unavailable"
+        },
+        {
+          "name": "Tall View / Helvetica 20",
+          "measurable": true,
+          "baseline": 48.333,
+          "viewBottom": 50.333,
+          "error": 2.0
+        },
+        {
+          "name": "Wrapped / Helvetica 24",
+          "measurable": true,
+          "baseline": 49.68,
+          "viewBottom": 52.333,
+          "error": 2.653
+        },
+        {
+          "name": "Scaled / Helvetica 20",
+          "measurable": true,
+          "baseline": 39.432,
+          "viewBottom": 46.667,
+          "error": 7.235
+        }
+      ]
+    },
+    "after": {
+      "nativeRevision": "95d557afb09b76659ff89a3b49b4aba511cc13e2",
+      "textSizeCategory": "large",
+      "displayedFontScale": 1.0,
+      "displayedPixelTolerancePt": 0.333,
+      "measurableCases": 9,
+      "maxAbsoluteErrorPt": 0.151,
+      "cases": [
+        {
+          "name": "Helvetica 12 (control)",
+          "measurable": true,
+          "baseline": 18.333,
+          "viewBottom": 18.333,
+          "error": 0.0
+        },
+        {
+          "name": "System 20",
+          "measurable": true,
+          "baseline": 19.043,
+          "viewBottom": 19.0,
+          "error": -0.043
+        },
+        {
+          "name": "Helvetica 32",
+          "measurable": true,
+          "baseline": 29.441,
+          "viewBottom": 29.333,
+          "error": -0.107
+        },
+        {
+          "name": "Times New Roman 32",
+          "measurable": true,
+          "baseline": 28.516,
+          "viewBottom": 28.667,
+          "error": 0.151
+        },
+        {
+          "name": "Courier bold 24",
+          "measurable": true,
+          "baseline": 18.333,
+          "viewBottom": 18.333,
+          "error": 0.0
+        },
+        {
+          "name": "Helvetica 32 / lineHeight 48",
+          "measurable": true,
+          "baseline": 35.041,
+          "viewBottom": 35.0,
+          "error": -0.041
+        },
+        {
+          "name": "Nested Times New Roman 32",
+          "measurable": false,
+          "reason": "View measurement unavailable"
+        },
+        {
+          "name": "Tall View / Helvetica 20",
+          "measurable": true,
+          "baseline": 48.333,
+          "viewBottom": 48.333,
+          "error": -0.0
+        },
+        {
+          "name": "Wrapped / Helvetica 24",
+          "measurable": true,
+          "baseline": 49.68,
+          "viewBottom": 49.667,
+          "error": -0.014
+        },
+        {
+          "name": "Scaled / Helvetica 20",
+          "measurable": true,
+          "baseline": 18.4,
+          "viewBottom": 18.333,
+          "error": -0.067
+        }
+      ]
+    },
+    "afterScaled": {
+      "nativeRevision": "95d557afb09b76659ff89a3b49b4aba511cc13e2",
+      "textSizeCategory": "accessibility-large",
+      "displayedFontScale": 2.143,
+      "displayedPixelTolerancePt": 0.333,
+      "measurableCases": 9,
+      "maxAbsoluteErrorPt": 0.151,
+      "cases": [
+        {
+          "name": "Helvetica 12 (control)",
+          "measurable": true,
+          "baseline": 18.333,
+          "viewBottom": 18.333,
+          "error": 0.0
+        },
+        {
+          "name": "System 20",
+          "measurable": true,
+          "baseline": 19.043,
+          "viewBottom": 19.0,
+          "error": -0.043
+        },
+        {
+          "name": "Helvetica 32",
+          "measurable": true,
+          "baseline": 29.441,
+          "viewBottom": 29.333,
+          "error": -0.107
+        },
+        {
+          "name": "Times New Roman 32",
+          "measurable": true,
+          "baseline": 28.516,
+          "viewBottom": 28.667,
+          "error": 0.151
+        },
+        {
+          "name": "Courier bold 24",
+          "measurable": true,
+          "baseline": 18.333,
+          "viewBottom": 18.333,
+          "error": 0.0
+        },
+        {
+          "name": "Helvetica 32 / lineHeight 48",
+          "measurable": true,
+          "baseline": 35.041,
+          "viewBottom": 35.0,
+          "error": -0.041
+        },
+        {
+          "name": "Nested Times New Roman 32",
+          "measurable": false,
+          "reason": "View measurement unavailable"
+        },
+        {
+          "name": "Tall View / Helvetica 20",
+          "measurable": true,
+          "baseline": 48.333,
+          "viewBottom": 48.333,
+          "error": -0.0
+        },
+        {
+          "name": "Wrapped / Helvetica 24",
+          "measurable": true,
+          "baseline": 49.68,
+          "viewBottom": 49.667,
+          "error": -0.014
+        },
+        {
+          "name": "Scaled / Helvetica 20",
+          "measurable": true,
+          "baseline": 39.432,
+          "viewBottom": 39.333,
+          "error": -0.099
+        }
+      ]
+    }
+  }
+}
