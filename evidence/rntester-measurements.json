@@ -1,5 +1,5 @@
 {
-  "exampleRevision": "95d557afb09b76659ff89a3b49b4aba511cc13e2",
+  "exampleRevision": "7abc1f8db8b7fd0f27c7ce2dc1f82641c3b3e649",
   "device": {
     "model": "iPhone 18 Pro",
     "os": "iOS 27.0",
@@ -11,7 +11,7 @@
   "displayPrecisionPt": 0.001,
   "groups": {
     "before": {
-      "nativeRevision": "c7429b0e97b400a88158f73d2250f8d5f16593cf",
+      "nativeRevision": "502f112fa3716c8d31b431168bb8b65e9f6a1de8",
       "textSizeCategory": "large",
       "displayedFontScale": 1.0,
       "displayedPixelTolerancePt": 0.333,
@@ -89,7 +89,7 @@
       ]
     },
     "beforeScaled": {
-      "nativeRevision": "c7429b0e97b400a88158f73d2250f8d5f16593cf",
+      "nativeRevision": "502f112fa3716c8d31b431168bb8b65e9f6a1de8",
       "textSizeCategory": "accessibility-large",
       "displayedFontScale": 2.143,
       "displayedPixelTolerancePt": 0.333,
@@ -167,7 +167,7 @@
       ]
     },
     "after": {
-      "nativeRevision": "95d557afb09b76659ff89a3b49b4aba511cc13e2",
+      "nativeRevision": "7abc1f8db8b7fd0f27c7ce2dc1f82641c3b3e649",
       "textSizeCategory": "large",
       "displayedFontScale": 1.0,
       "displayedPixelTolerancePt": 0.333,
@@ -245,7 +245,7 @@
       ]
     },
     "afterScaled": {
-      "nativeRevision": "95d557afb09b76659ff89a3b49b4aba511cc13e2",
+      "nativeRevision": "7abc1f8db8b7fd0f27c7ce2dc1f82641c3b3e649",
       "textSizeCategory": "accessibility-large",
       "displayedFontScale": 2.143,
       "displayedPixelTolerancePt": 0.333,
