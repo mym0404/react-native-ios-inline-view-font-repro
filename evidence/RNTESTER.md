@@ -2,9 +2,9 @@
 
 The PR branch includes the reproduction in iOS RNTester under **Text > Inline view baseline alignment**. All nine measurable cases stay within one physical pixel after the fix, at font scales **1.0** and **2.143**. The largest displayed difference is **0.151 pt**; one physical pixel is displayed as **0.333 pt**.
 
-- [Example source](https://github.com/react/react-native/blob/7abc1f8db8b7fd0f27c7ce2dc1f82641c3b3e649/packages/rn-tester/js/examples/Text/TextInlineViewBaselineExample.js) and [Text registration](https://github.com/react/react-native/blob/7abc1f8db8b7fd0f27c7ce2dc1f82641c3b3e649/packages/rn-tester/js/examples/Text/TextExample.ios.js).
+- [Example source](https://github.com/react/react-native/blob/d969690bee171f680d9f66ad4eae9cf2a9d1df65/packages/rn-tester/js/examples/Text/TextInlineViewBaselineExample.js) and [Text registration](https://github.com/react/react-native/blob/d969690bee171f680d9f66ad4eae9cf2a9d1df65/packages/rn-tester/js/examples/Text/TextExample.ios.js).
 - Before: native renderer at `502f112fa3716c8d31b431168bb8b65e9f6a1de8`, with the same RNTester example added.
-- After: PR source at `7abc1f8db8b7fd0f27c7ce2dc1f82641c3b3e649`.
+- After: PR source at `d969690bee171f680d9f66ad4eae9cf2a9d1df65`.
 - iPhone 18 Pro, iOS 27.0 Simulator, Xcode 27.2 (27B52), iOS Simulator SDK 27.2, Fabric, agent-device 0.21.36.
 
 Open Text and search for the example title, or launch `rntester://example/TextExample/inline-view-baseline`. The blue View's bottom should meet the red text baseline. Scroll to the remaining rows. Only the last sample allows font scaling; compare the system text-size categories `large` and `accessibility-large`.
@@ -43,6 +43,7 @@ The enlarged screenshots use agent-device's native crop of `example-container`. 
 - ✅ RNTester Debug builds from native source before and after the fix: `BUILD SUCCEEDED` for both.
 - ✅ Text's example search and the direct link both open the reproduction; scrolling reaches the final sample.
 - ✅ Nine numerical comparisons at each font scale pass the one-pixel tolerance after the fix. Both clean app launches render without a React warning or error overlay.
+- ✅ Full Flow check: `Found 0 errors`.
 - ✅ Prettier, ESLint with `--max-warnings 0`, clang-format for both native files, and `git diff --check origin/main`: passed for the PR changes.
 - ✅ The tested RNTester files match the committed source byte for byte. No diagnostic native instrumentation was used.
 - ✅ The original system text-size setting was restored and the simulator was shut down after verification.
@@ -63,6 +64,7 @@ yarn prettier --check \
 yarn eslint --max-warnings 0 \
   packages/rn-tester/js/examples/Text/TextInlineViewBaselineExample.js \
   packages/rn-tester/js/examples/Text/TextExample.ios.js
+yarn flow-check --max-workers 6
 git diff --check origin/main
 ```
 
